@@ -24,7 +24,7 @@ base directory, which can then be synchronized to remote storage
 (using an external tool).
 
 %prep
-%autosetup -p1
+%autosetup -c -p1
 
 %build
 %cmake \
