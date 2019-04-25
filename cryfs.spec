@@ -1,3 +1,5 @@
+%global optflags %{optflags} -O3 -fPIC
+
 Summary:	Cryptographic filesystem for the cloud
 Name:		cryfs
 Version:	0.10.1
