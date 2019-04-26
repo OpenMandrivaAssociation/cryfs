@@ -1,0 +1,12 @@
+diff -urN cryfs-0.9.9/src/cryfs-cli/CMakeLists.txt cryfs-0.9.9-patched/src/cryfs-cli/CMakeLists.txt
+--- cryfs-0.9.9/src/cryfs-cli/CMakeLists.txt	2018-02-05 13:16:25.000000000 +1000
++++ cryfs-0.9.9-patched/src/cryfs-cli/CMakeLists.txt	2018-04-05 22:29:03.657671809 +1000
+@@ -11,7 +11,7 @@
+         program_options/Parser.cpp
+ )
+ 
+-add_library(${PROJECT_NAME} ${SOURCES})
++add_library(${PROJECT_NAME} STATIC ${SOURCES})
+ target_link_libraries(${PROJECT_NAME} PUBLIC cryfs cpp-utils gitversion)
+ target_enable_style_warnings(${PROJECT_NAME})
+ target_activate_cpp14(${PROJECT_NAME})
