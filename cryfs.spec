@@ -12,7 +12,7 @@ License:	LGPLv3+
 Group:		File tools
 Url:		https://www.cryfs.org
 Source0:	https://github.com/cryfs/cryfs/releases/download/%{version}/%{name}-%{version}.tar.xz
-Patch0:		cryfs-0.10.1-add-missing-boost-linkage.patch
+Patch0:		cryfs-0.9.9-static.patch
 BuildRequires:	cmake
 BuildRequires:	ninja
 BuildRequires:	boost-devel
@@ -31,7 +31,7 @@ base directory, which can then be synchronized to remote storage
 (using an external tool).
 
 %prep
-%autosetup -c -p0
+%autosetup -c -p1
 
 %build
 %cmake \
