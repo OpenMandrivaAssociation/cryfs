@@ -39,6 +39,7 @@ base directory, which can then be synchronized to remote storage
     -DBoost_USE_STATIC_LIBS=OFF \
     -DBUILD_TESTING=OFF \
     -DCRYFS_UPDATE_CHECKS=OFF \
+    -DBUILD_TESTING=OFF \
     -G Ninja
 
 %ninja
