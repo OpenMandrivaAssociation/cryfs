@@ -1,13 +1,11 @@
-# (tpg) disable LTO 2019-04-25
-#/tmp/lto-llvm-f8f7f6.o:ld-temp.o:function cryfs_unmount::program_options::ProgramOptions::ProgramOptions(boost::filesystem::path): error: undefined reference to 'boost::filesystem::detail::current_path(boost::system::error_code*)'
-#/tmp/lto-llvm-f8f7f6.o:ld-temp.o:function cryfs_unmount::program_options::ProgramOptions::ProgramOptions(boost::filesystem::path): error: undefined reference to 'boost::filesystem::absolute(boost::filesystem::path const&, boost::filesystem::path const&)'
-%define _disable_lto 1
+%global __requires_exclude '^libcryfs-unmount.so.*'
+
 %global optflags %{optflags} -O3 -fPIC
 
 Summary:	Cryptographic filesystem for the cloud
 Name:		cryfs
 Version:	0.10.1
-Release:	1
+Release:	2
 License:	LGPLv3+
 Group:		File tools
 Url:		https://www.cryfs.org
