@@ -34,6 +34,8 @@ base directory, which can then be synchronized to remote storage
 %autosetup -c -p1
 
 %build
+export LDFLAGS="-L%{_libdir} -lboost_thread -lboost_program_options -lboost_filesystem -lcryptopp -lboost_chrono -lfuse"
+
 %cmake \
     -DCMAKE_BUILD_TYPE=Release \
     -DBoost_USE_STATIC_LIBS=OFF \
