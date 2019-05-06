@@ -51,6 +51,6 @@ export LDFLAGS="-L%{_libdir} -lboost_thread -lboost_program_options -lboost_file
 
 %files
 %doc README.md ChangeLog.txt
-%license LICENSE
+%license LICENSE.txt
 %{_bindir}/cryfs*
 %{_mandir}/man?/cryfs*
