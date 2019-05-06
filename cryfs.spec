@@ -41,6 +41,7 @@ export LDFLAGS="-L%{_libdir} -lboost_thread -lboost_program_options -lboost_file
     -DBoost_USE_STATIC_LIBS=OFF \
     -DBUILD_TESTING=OFF \
     -DCRYFS_UPDATE_CHECKS=OFF \
+    -DBUILD_TESTING=OFF \
     -G Ninja
 
 %ninja
