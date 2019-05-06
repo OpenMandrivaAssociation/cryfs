@@ -16,6 +16,7 @@ BuildRequires:	pkgconfig(libcurl)
 BuildRequires:	pkgconfig(fuse)
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(cryptopp)
+BuildRequires:	gomp-devel openmp-devel
 Requires:	fuse2
 
 %description
