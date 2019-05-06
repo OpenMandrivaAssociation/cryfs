@@ -1,16 +1,14 @@
-%global __requires_exclude '^libcryfs-unmount.so.*'
-
 %global optflags %{optflags} -O3 -fPIC
 
 Summary:	Cryptographic filesystem for the cloud
 Name:		cryfs
 Version:	0.10.1
-Release:	2
+Release:	3
 License:	LGPLv3+
 Group:		File tools
 Url:		https://www.cryfs.org
 Source0:	https://github.com/cryfs/cryfs/releases/download/%{version}/%{name}-%{version}.tar.xz
-Patch0:		cryfs-0.9.9-static.patch
+Patch0:		cryfs-0.10.1-static-unmount-library.patch
 BuildRequires:	cmake
 BuildRequires:	ninja
 BuildRequires:	boost-devel
@@ -32,6 +30,13 @@ base directory, which can then be synchronized to remote storage
 %autosetup -c -p1
 
 %build
+%ifarch znver1
+# with clang 8.0.1-0.359956:
+# ld: ../lib/Linker/IRMover.cpp:1006: llvm::Error (anonymous namespace)::IRLinker::linkFunctionBody(llvm::Function &, llvm::Function &): Assertion `Dst.isDeclaration() && !Src.isDeclaration()' failed.
+# clang-8: error: unable to execute command: Aborted (core dumped)
+export CC=gcc
+export CXX=g++
+%endif
 export LDFLAGS="-L%{_libdir} -lboost_thread -lboost_program_options -lboost_filesystem -lcryptopp -lboost_chrono -lfuse"
 
 %cmake \
