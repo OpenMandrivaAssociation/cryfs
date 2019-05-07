@@ -1,0 +1,11 @@
+--- cryfs-0.10.1/src/cryfs-cli/CMakeLists.txt	2019-04-04 01:37:11.000000000 +0000
++++ cryfs-0.10.1/src/cryfs-cli/CMakeLists.txt.tpg	2019-05-07 06:34:27.438056481 +0000
+@@ -11,7 +11,7 @@
+         program_options/Parser.cpp
+ )
+ 
+-add_library(${PROJECT_NAME} ${SOURCES})
++add_library(${PROJECT_NAME} STATIC ${SOURCES})
+ target_link_libraries(${PROJECT_NAME} PUBLIC cryfs cpp-utils gitversion fspp-fuse)
+ target_enable_style_warnings(${PROJECT_NAME})
+ target_activate_cpp14(${PROJECT_NAME})
