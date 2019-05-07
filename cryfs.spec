@@ -31,13 +31,11 @@ base directory, which can then be synchronized to remote storage
 %autosetup -c -p1
 
 %build
-%ifarch znver1
 # with clang 8.0.1-0.359956:
 # ld: ../lib/Linker/IRMover.cpp:1006: llvm::Error (anonymous namespace)::IRLinker::linkFunctionBody(llvm::Function &, llvm::Function &): Assertion `Dst.isDeclaration() && !Src.isDeclaration()' failed.
 # clang-8: error: unable to execute command: Aborted (core dumped)
 export CC=gcc
 export CXX=g++
-%endif
 export LDFLAGS="-L%{_libdir} -lboost_thread -lboost_program_options -lboost_filesystem -lcryptopp -lboost_chrono -lfuse"
 
 %cmake \
