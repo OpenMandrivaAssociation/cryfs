@@ -2,7 +2,7 @@
 
 Summary:	Cryptographic filesystem for the cloud
 Name:		cryfs
-Version:	0.10.1
+Version:	0.10.2
 Release:	4
 License:	LGPLv3+
 Group:		File tools
