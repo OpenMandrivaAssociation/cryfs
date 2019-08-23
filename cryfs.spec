@@ -3,7 +3,7 @@
 Summary:	Cryptographic filesystem for the cloud
 Name:		cryfs
 Version:	0.10.2
-Release:	5
+Release:	6
 License:	LGPLv3+
 Group:		File tools
 Url:		https://www.cryfs.org
@@ -30,11 +30,15 @@ base directory, which can then be synchronized to remote storage
 
 %prep
 %autosetup -c -p1
+# Use system cryptopp
+rm -rf vendor/cryptopp
+find . -name "*.cpp" -o -name "*.h" |xargs sed -i -e 's,vendor_cryptopp,cryptopp,g'
+sed -i -e '/cryptopp/d' vendor/CMakeLists.txt
 
 %build
-# with clang 8.0.1-0.359956:
+# with clang 9.0.0-rc2 on x86_64:
 # ld: ../lib/Linker/IRMover.cpp:1006: llvm::Error (anonymous namespace)::IRLinker::linkFunctionBody(llvm::Function &, llvm::Function &): Assertion `Dst.isDeclaration() && !Src.isDeclaration()' failed.
-# clang-8: error: unable to execute command: Aborted (core dumped)
+# clang-9: error: unable to execute command: Aborted (core dumped)
 export CC=gcc
 export CXX=g++
 export LDFLAGS="-L%{_libdir} -lboost_thread -lboost_program_options -lboost_filesystem -lcryptopp -lboost_chrono -lfuse"
