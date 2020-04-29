@@ -36,12 +36,7 @@ find . -name "*.cpp" -o -name "*.h" |xargs sed -i -e 's,vendor_cryptopp,cryptopp
 sed -i -e '/cryptopp/d' vendor/CMakeLists.txt
 
 %build
-# with clang 9.0.0-rc2 on x86_64:
-# ld: ../lib/Linker/IRMover.cpp:1006: llvm::Error (anonymous namespace)::IRLinker::linkFunctionBody(llvm::Function &, llvm::Function &): Assertion `Dst.isDeclaration() && !Src.isDeclaration()' failed.
-# clang-9: error: unable to execute command: Aborted (core dumped)
-export CC=gcc
-export CXX=g++
-export LDFLAGS="-L%{_libdir} -lboost_thread -lboost_program_options -lboost_filesystem -lcryptopp -lboost_chrono -lfuse"
+export LDFLAGS="%{ldflags} -lboost_thread -lboost_program_options -lboost_filesystem -lcryptopp -lboost_chrono -lfuse"
 
 %cmake \
     -DCMAKE_BUILD_TYPE=Release \
