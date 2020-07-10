@@ -3,7 +3,7 @@
 Summary:	Cryptographic filesystem for the cloud
 Name:		cryfs
 Version:	0.10.2
-Release:	8
+Release:	9
 License:	LGPLv3+
 Group:		File tools
 Url:		https://www.cryfs.org
@@ -44,6 +44,9 @@ export LDFLAGS="%{ldflags} -lboost_thread -lboost_program_options -lboost_filesy
     -DBUILD_TESTING=OFF \
     -DCRYFS_UPDATE_CHECKS=OFF \
     -DBUILD_TESTING=OFF \
+%ifarch %{x86_64}
+ 	-DCMAKE_CXX_FLAGS="-msse4.1" \
+%endif
     -G Ninja
 
 %ninja
