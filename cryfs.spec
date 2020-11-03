@@ -18,6 +18,7 @@ BuildRequires:	pkgconfig(fuse)
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(cryptopp)
 BuildRequires:	gomp-devel openmp-devel
+BuildRequires:	pkgconfig(libunwind)
 Requires:	fuse2
 
 %description
