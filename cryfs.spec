@@ -1,9 +1,9 @@
-%global optflags %{optflags} -O3 -fPIC
+%global optflags %{optflags} -O3 -fPIC -I%{_includedir}/libunwind
 
 Summary:	Cryptographic filesystem for the cloud
 Name:		cryfs
 Version:	0.10.2
-Release:	11
+Release:	1
 License:	LGPLv3+
 Group:		File tools
 Url:		https://www.cryfs.org
