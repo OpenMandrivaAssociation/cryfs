@@ -1,0 +1,11 @@
+diff -up cryfs-0.10.3/src/fspp/fuse/Fuse.h.omv~ cryfs-0.10.3/src/fspp/fuse/Fuse.h
+--- cryfs-0.10.3/src/fspp/fuse/Fuse.h.omv~	2021-08-21 01:43:02.224124643 +0200
++++ cryfs-0.10.3/src/fspp/fuse/Fuse.h	2021-08-21 01:43:07.709133658 +0200
+@@ -6,6 +6,7 @@
+ #include <cstdio>
+ #include <string>
+ #include <vector>
++#include <memory>
+ #include <sys/stat.h>
+ #include <boost/filesystem.hpp>
+ #include <boost/optional.hpp>

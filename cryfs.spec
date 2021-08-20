@@ -3,13 +3,14 @@
 Summary:	Cryptographic filesystem for the cloud
 Name:		cryfs
 Version:	0.10.3
-Release:	2
+Release:	3
 License:	LGPLv3+
 Group:		File tools
 Url:		https://www.cryfs.org
 Source0:	https://github.com/cryfs/cryfs/releases/download/%{version}/%{name}-%{version}.tar.xz
 Patch0:		cryfs-0.10.1-static-unmount-library.patch
 Patch1:		cryfs-0.10.1-static-cryfs-cli.patch
+Patch2:		cryfs-0.10.3-libstdc++-11.2.patch
 BuildRequires:	cmake
 BuildRequires:	ninja
 BuildRequires:	boost-devel
@@ -40,11 +41,11 @@ sed -i -e '/cryptopp/d' vendor/CMakeLists.txt
 export LDFLAGS="%{ldflags} -lboost_thread -lboost_program_options -lboost_filesystem -lcryptopp -lboost_chrono -lfuse"
 
 %cmake \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DBoost_USE_STATIC_LIBS=OFF \
-    -DBUILD_TESTING=OFF \
-    -DCRYFS_UPDATE_CHECKS=OFF \
-    -DBUILD_TESTING=OFF \
+	-DCMAKE_BUILD_TYPE=Release \
+	-DBoost_USE_STATIC_LIBS=OFF \
+	-DBUILD_TESTING=OFF \
+	-DCRYFS_UPDATE_CHECKS=OFF \
+	-DBUILD_TESTING=ON \
 %ifarch %{x86_64}
  	-DCMAKE_CXX_FLAGS="-msse4.1" \
 %endif
