@@ -2,7 +2,7 @@
 
 Summary:	Cryptographic filesystem for the cloud
 Name:		cryfs
-Version:	0.10.4
+Version:	0.11.0
 Release:	1
 License:	LGPLv3+
 Group:		File tools
@@ -18,8 +18,10 @@ BuildRequires:	pkgconfig(libcurl)
 BuildRequires:	pkgconfig(fuse)
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(cryptopp)
+BuildRequires:	pkgconfig(spdlog)
 BuildRequires:	gomp-devel openmp-devel
 BuildRequires:	pkgconfig(libunwind)
+BuildRequires:	range-v3-devel
 Requires:	fuse2
 
 %description
@@ -46,6 +48,7 @@ export LDFLAGS="%{ldflags} -lboost_thread -lboost_program_options -lboost_filesy
 	-DBUILD_TESTING=OFF \
 	-DCRYFS_UPDATE_CHECKS=OFF \
 	-DBUILD_TESTING=ON \
+        -DDEPENDENCY_CONFIG="../cmake-utils/DependenciesFromLocalSystem.cmake" \
 %ifarch %{x86_64}
  	-DCMAKE_CXX_FLAGS="-msse4.1" \
 %endif
