@@ -3,7 +3,7 @@
 Summary:	Cryptographic filesystem for the cloud
 Name:		cryfs
 Version:	0.11.2
-Release:	2
+Release:	3
 License:	LGPLv3+
 Group:		File tools
 Url:		https://www.cryfs.org
@@ -11,6 +11,7 @@ Source0:	https://github.com/cryfs/cryfs/releases/download/%{version}/%{name}-%{v
 Patch0:		cryfs-0.10.1-static-unmount-library.patch
 Patch1:		cryfs-0.10.1-static-cryfs-cli.patch
 Patch2:		cryfs-0.10.3-libstdc++-11.2.patch
+Patch3:		cryfs-0.11.2-fmt-9.0.patch
 BuildRequires:	cmake
 BuildRequires:	ninja
 BuildRequires:	boost-devel
