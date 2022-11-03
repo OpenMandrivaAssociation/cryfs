@@ -41,7 +41,7 @@ find . -name "*.cpp" -o -name "*.h" |xargs sed -i -e 's,vendor_cryptopp,cryptopp
 sed -i -e '/cryptopp/d' vendor/CMakeLists.txt
 
 %build
-export LDFLAGS="%{ldflags} -lboost_thread -lboost_program_options -lboost_filesystem -lcryptopp -lboost_chrono -lfuse"
+export LDFLAGS="%{ldflags} -lboost_thread -lboost_program_options -lboost_filesystem -lcryptopp -lboost_chrono -lfuse -lcurl"
 
 %cmake \
 	-DCMAKE_BUILD_TYPE=Release \
