@@ -3,7 +3,7 @@
 Summary:	Cryptographic filesystem for the cloud
 Name:		cryfs
 Version:	0.11.3
-Release:	1
+Release:	2
 License:	LGPLv3+
 Group:		File tools
 Url:		https://www.cryfs.org
@@ -19,7 +19,8 @@ BuildRequires:	pkgconfig(fuse)
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(cryptopp)
 BuildRequires:	pkgconfig(spdlog)
-BuildRequires:	gomp-devel openmp-devel
+BuildRequires:	gomp-devel
+BuildRequires:	openmp-devel
 BuildRequires:	pkgconfig(libunwind)
 BuildRequires:	range-v3-devel
 Requires:	fuse2
@@ -40,7 +41,7 @@ find . -name "*.cpp" -o -name "*.h" |xargs sed -i -e 's,vendor_cryptopp,cryptopp
 sed -i -e '/cryptopp/d' vendor/CMakeLists.txt
 
 %build
-export LDFLAGS="%{ldflags} -lboost_thread -lboost_program_options -lboost_filesystem -lcryptopp -lboost_chrono -lfuse -lcurl"
+export LDFLAGS="%{build_ldflags} -lboost_thread -lboost_program_options -lboost_filesystem -lcryptopp -lboost_chrono -lfuse -lcurl"
 
 %cmake \
 	-DCMAKE_BUILD_TYPE=Release \
@@ -63,4 +64,4 @@ export LDFLAGS="%{ldflags} -lboost_thread -lboost_program_options -lboost_filesy
 %doc README.md ChangeLog.txt
 %license LICENSE.txt
 %{_bindir}/cryfs*
-%{_mandir}/man?/cryfs*
+%doc %{_mandir}/man?/cryfs*
