@@ -1,0 +1,12 @@
+diff -up cryfs-1.0.1/src/cpp-utils/CMakeLists.txt.omv~ cryfs-1.0.1/src/cpp-utils/CMakeLists.txt
+--- cryfs-1.0.1/src/cpp-utils/CMakeLists.txt.omv~	2025-04-12 03:58:20.244966667 +0200
++++ cryfs-1.0.1/src/cpp-utils/CMakeLists.txt	2025-04-12 03:58:28.650758318 +0200
+@@ -71,7 +71,7 @@ target_link_libraries(${PROJECT_NAME} PU
+ 
+ target_link_libraries(${PROJECT_NAME} PUBLIC ${CMAKE_DL_LIBS})
+ 
+-target_link_libraries(${PROJECT_NAME} PUBLIC CryfsDependencies_spdlog cryfs_vendor_cryptopp CryfsDependencies_range-v3)
++target_link_libraries(${PROJECT_NAME} PUBLIC CryfsDependencies_spdlog cryptopp CryfsDependencies_range-v3)
+ if(CRYFS_UPDATE_CHECKS)
+     target_compile_definitions(${PROJECT_NAME} PUBLIC -DCRYFS_UPDATE_CHECKS)
+     target_link_libraries(${PROJECT_NAME} PUBLIC CryfsDependencies_libcurl)

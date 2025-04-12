@@ -2,8 +2,8 @@
 
 Summary:	Cryptographic filesystem for the cloud
 Name:		cryfs
-Version:	0.11.4
-Release:	14
+Version:	1.0.1
+Release:	1
 License:	LGPLv3+
 Group:		File tools
 Url:		https://www.cryfs.org
@@ -26,8 +26,8 @@ Requires:	fuse2
 cryfs-0.10.1-static-unmount-library.patch
 cryfs-0.10.1-static-cryfs-cli.patch
 cryfs-0.10.3-libstdc++-11.2.patch
-cryfs-0.11.4-cmake-4.0.patch
 cryfs-0.11.4-boost-1.88.patch
+cryfs-1.0.1-system-cryptopp.patch
 
 %description
 CryFS provides a FUSE-based mount that encrypts file contents, file

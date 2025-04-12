@@ -1,33 +1,39 @@
-diff -up cryfs-0.11.4/cmake-utils/DependenciesFromLocalSystem.cmake.omv~ cryfs-0.11.4/cmake-utils/DependenciesFromLocalSystem.cmake
---- cryfs-0.11.4/cmake-utils/DependenciesFromLocalSystem.cmake.omv~	2025-04-12 03:44:14.958297066 +0200
-+++ cryfs-0.11.4/cmake-utils/DependenciesFromLocalSystem.cmake	2025-04-12 03:44:26.516457554 +0200
-@@ -45,7 +45,7 @@ find_package(Boost 1.65.1
+diff -up cryfs-1.0.1/cmake-utils/Dependencies.cmake.4~ cryfs-1.0.1/cmake-utils/Dependencies.cmake
+--- cryfs-1.0.1/cmake-utils/Dependencies.cmake.4~	2025-04-12 03:55:37.398730651 +0200
++++ cryfs-1.0.1/cmake-utils/Dependencies.cmake	2025-04-12 03:55:42.781992689 +0200
+@@ -9,7 +9,7 @@ find_package(Boost 1.84.0
+         REQUIRED
          COMPONENTS filesystem system thread chrono program_options)
- check_target_is_not_from_conan(Boost::boost)
  add_library(CryfsDependencies_boost INTERFACE)
 -target_link_libraries(CryfsDependencies_boost INTERFACE Boost::boost Boost::filesystem Boost::thread Boost::chrono Boost::program_options)
 +target_link_libraries(CryfsDependencies_boost INTERFACE Boost::boost Boost::filesystem Boost::thread Boost::chrono Boost::program_options boost_process)
  if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
      # Also link to rt, because boost thread needs that.
      target_link_libraries(CryfsDependencies_boost INTERFACE rt)
-diff -up cryfs-0.11.4/cmake-utils/utils.cmake.omv~ cryfs-0.11.4/cmake-utils/utils.cmake
-diff -up cryfs-0.11.4/src/cpp-utils/process/subprocess.cpp.omv~ cryfs-0.11.4/src/cpp-utils/process/subprocess.cpp
---- cryfs-0.11.4/src/cpp-utils/process/subprocess.cpp.omv~	2025-04-12 03:36:37.211035401 +0200
-+++ cryfs-0.11.4/src/cpp-utils/process/subprocess.cpp	2025-04-12 03:41:02.823219852 +0200
-@@ -5,6 +5,12 @@
+@@ -30,4 +30,4 @@ if (BUILD_TESTING)
+     find_package(GTest REQUIRED)
+     add_library(CryfsDependencies_gtest INTERFACE)
+     target_link_libraries(CryfsDependencies_gtest INTERFACE GTest::gtest GTest::gmock)
+-endif()
+\ No newline at end of file
++endif()
+diff -up cryfs-1.0.1/src/cpp-utils/process/subprocess.cpp.4~ cryfs-1.0.1/src/cpp-utils/process/subprocess.cpp
+--- cryfs-1.0.1/src/cpp-utils/process/subprocess.cpp.4~	2024-11-23 08:24:23.000000000 +0100
++++ cryfs-1.0.1/src/cpp-utils/process/subprocess.cpp	2025-04-12 03:56:50.161850183 +0200
+@@ -2,6 +2,12 @@
  #include <array>
- #include <boost/process.hpp>
  #include <boost/asio.hpp>
+ #include <boost/process.hpp>
 +#include <boost/process/v1/args.hpp>
 +#include <boost/process/v1/async.hpp>
 +#include <boost/process/v1/child.hpp>
 +#include <boost/process/v1/exe.hpp>
 +#include <boost/process/v1/search_path.hpp>
 +#include <boost/process/v1/io.hpp>
- 
- using std::string;
- using std::vector;
-@@ -26,7 +32,7 @@ namespace cpputils
+ #include <cerrno>
+ #include <cstddef>
+ #include <cstdio>
+@@ -27,7 +33,7 @@ namespace cpputils
  	{
  		bf::path _find_executable(const char *command)
  		{
@@ -36,7 +42,7 @@ diff -up cryfs-0.11.4/src/cpp-utils/process/subprocess.cpp.omv~ cryfs-0.11.4/src
  			if (executable == "")
  			{
  				throw std::runtime_error("Tried to run command " + std::string(command) + " but didn't find it in the PATH");
-@@ -62,7 +68,7 @@ namespace cpputils
+@@ -63,7 +69,7 @@ namespace cpputils
  				ba::async_read(pipe_, buffer_, onOutput);
  			}
  
@@ -45,7 +51,7 @@ diff -up cryfs-0.11.4/src/cpp-utils/process/subprocess.cpp.omv~ cryfs-0.11.4/src
  			{
  				return pipe_;
  			}
-@@ -76,7 +82,7 @@ namespace cpputils
+@@ -77,7 +83,7 @@ namespace cpputils
  		private:
  			std::vector<char> vOut_;
  			ba::mutable_buffer buffer_;
@@ -54,7 +60,7 @@ diff -up cryfs-0.11.4/src/cpp-utils/process/subprocess.cpp.omv~ cryfs-0.11.4/src
  			std::string output_;
  		};
  
-@@ -90,7 +96,7 @@ namespace cpputils
+@@ -91,7 +97,7 @@ namespace cpputils
  
  			}
  
@@ -63,18 +69,18 @@ diff -up cryfs-0.11.4/src/cpp-utils/process/subprocess.cpp.omv~ cryfs-0.11.4/src
  			{
  				return pipe_;
  			}
-@@ -110,7 +116,7 @@ namespace cpputils
+@@ -111,7 +117,7 @@ namespace cpputils
  		private:
- 			const std::string& input_;
+ 			const std::string* input_;
  			ba::const_buffer buffer_;
 -			bp::async_pipe pipe_;
 +			bp::v1::async_pipe pipe_;
  		};
  	}
  
-@@ -141,12 +147,12 @@ namespace cpputils
+@@ -142,12 +148,12 @@ namespace cpputils
  		OutputPipeHandler stderr_handler(&ctx);
- 		InputPipeHandler stdin_handler(&ctx, input);
+ 		InputPipeHandler stdin_handler(&ctx, &input);
  
 -		bp::child child(
 -			bp::exe = executable.string(),
@@ -91,4 +97,3 @@ diff -up cryfs-0.11.4/src/cpp-utils/process/subprocess.cpp.omv~ cryfs-0.11.4/src
  		);
  
  		stdin_handler.async_write();
-diff -up cryfs-0.11.4/src/cryfs-unmount/CMakeLists.txt.omv~ cryfs-0.11.4/src/cryfs-unmount/CMakeLists.txt

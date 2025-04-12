@@ -1,15 +1,15 @@
-diff -up cryfs-0.10.1/src/cryfs-unmount/CMakeLists.txt.omv~ cryfs-0.10.1/src/cryfs-unmount/CMakeLists.txt
---- cryfs-0.10.1/src/cryfs-unmount/CMakeLists.txt.omv~	2019-05-07 01:17:53.263495859 +0200
-+++ cryfs-0.10.1/src/cryfs-unmount/CMakeLists.txt	2019-05-07 01:20:45.190104597 +0200
+diff -up cryfs-1.0.1/src/cryfs-unmount/CMakeLists.txt.1~ cryfs-1.0.1/src/cryfs-unmount/CMakeLists.txt
+--- cryfs-1.0.1/src/cryfs-unmount/CMakeLists.txt.1~	2024-11-23 08:24:23.000000000 +0100
++++ cryfs-1.0.1/src/cryfs-unmount/CMakeLists.txt	2025-04-12 03:53:14.178775127 +0200
 @@ -7,7 +7,10 @@ set(SOURCES
  	Cli.cpp
  )
  
--add_library(${PROJECT_NAME} ${SOURCES})
+-add_library(${PROJECT_NAME}_lib ${SOURCES})
 +# This library seems to be only for internal use (no soname
 +# or so set, no headers installed...), and it's not being
 +# installed anywhere -- so better make it a static lib!
-+add_library(${PROJECT_NAME} STATIC ${SOURCES})
- target_link_libraries(${PROJECT_NAME} PUBLIC cpp-utils cryfs fspp-fuse)
- target_enable_style_warnings(${PROJECT_NAME})
- target_activate_cpp14(${PROJECT_NAME})
++add_library(${PROJECT_NAME}_lib STATIC ${SOURCES})
+ target_link_libraries(${PROJECT_NAME}_lib PUBLIC cpp-utils cryfs fspp-fuse)
+ target_enable_style_warnings(${PROJECT_NAME}_lib)
+ target_activate_cpp14(${PROJECT_NAME}_lib)

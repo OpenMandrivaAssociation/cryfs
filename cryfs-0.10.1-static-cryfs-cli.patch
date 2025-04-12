@@ -1,11 +1,12 @@
---- cryfs-0.10.1/src/cryfs-cli/CMakeLists.txt	2019-04-04 01:37:11.000000000 +0000
-+++ cryfs-0.10.1/src/cryfs-cli/CMakeLists.txt.tpg	2019-05-07 06:34:27.438056481 +0000
-@@ -11,7 +11,7 @@
+diff -up cryfs-1.0.1/src/cryfs-cli/CMakeLists.txt.2~ cryfs-1.0.1/src/cryfs-cli/CMakeLists.txt
+--- cryfs-1.0.1/src/cryfs-cli/CMakeLists.txt.2~	2024-11-23 08:24:23.000000000 +0100
++++ cryfs-1.0.1/src/cryfs-cli/CMakeLists.txt	2025-04-12 03:54:13.592272578 +0200
+@@ -11,7 +11,7 @@ set(SOURCES
          program_options/Parser.cpp
  )
  
--add_library(${PROJECT_NAME} ${SOURCES})
-+add_library(${PROJECT_NAME} STATIC ${SOURCES})
- target_link_libraries(${PROJECT_NAME} PUBLIC cryfs cpp-utils gitversion fspp-fuse)
- target_enable_style_warnings(${PROJECT_NAME})
- target_activate_cpp14(${PROJECT_NAME})
+-add_library(${PROJECT_NAME}_lib ${SOURCES})
++add_library(${PROJECT_NAME}_lib STATIC ${SOURCES})
+ target_link_libraries(${PROJECT_NAME}_lib PUBLIC cryfs cpp-utils gitversion fspp-fuse)
+ target_enable_style_warnings(${PROJECT_NAME}_lib)
+ target_activate_cpp14(${PROJECT_NAME}_lib)
