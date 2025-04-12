@@ -8,9 +8,6 @@ License:	LGPLv3+
 Group:		File tools
 Url:		https://www.cryfs.org
 Source0:	https://github.com/cryfs/cryfs/releases/download/%{version}/%{name}-%{version}.tar.xz
-Patch0:		cryfs-0.10.1-static-unmount-library.patch
-Patch1:		cryfs-0.10.1-static-cryfs-cli.patch
-Patch2:		cryfs-0.10.3-libstdc++-11.2.patch
 BuildRequires:	cmake
 BuildRequires:	ninja
 BuildRequires:	boost-devel
@@ -24,6 +21,13 @@ BuildRequires:	openmp-devel
 BuildRequires:	pkgconfig(libunwind)
 BuildRequires:	range-v3-devel
 Requires:	fuse2
+
+%patchlist
+cryfs-0.10.1-static-unmount-library.patch
+cryfs-0.10.1-static-cryfs-cli.patch
+cryfs-0.10.3-libstdc++-11.2.patch
+cryfs-0.11.4-cmake-4.0.patch
+cryfs-0.11.4-boost-1.88.patch
 
 %description
 CryFS provides a FUSE-based mount that encrypts file contents, file

@@ -1,0 +1,94 @@
+diff -up cryfs-0.11.4/cmake-utils/DependenciesFromLocalSystem.cmake.omv~ cryfs-0.11.4/cmake-utils/DependenciesFromLocalSystem.cmake
+--- cryfs-0.11.4/cmake-utils/DependenciesFromLocalSystem.cmake.omv~	2025-04-12 03:44:14.958297066 +0200
++++ cryfs-0.11.4/cmake-utils/DependenciesFromLocalSystem.cmake	2025-04-12 03:44:26.516457554 +0200
+@@ -45,7 +45,7 @@ find_package(Boost 1.65.1
+         COMPONENTS filesystem system thread chrono program_options)
+ check_target_is_not_from_conan(Boost::boost)
+ add_library(CryfsDependencies_boost INTERFACE)
+-target_link_libraries(CryfsDependencies_boost INTERFACE Boost::boost Boost::filesystem Boost::thread Boost::chrono Boost::program_options)
++target_link_libraries(CryfsDependencies_boost INTERFACE Boost::boost Boost::filesystem Boost::thread Boost::chrono Boost::program_options boost_process)
+ if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+     # Also link to rt, because boost thread needs that.
+     target_link_libraries(CryfsDependencies_boost INTERFACE rt)
+diff -up cryfs-0.11.4/cmake-utils/utils.cmake.omv~ cryfs-0.11.4/cmake-utils/utils.cmake
+diff -up cryfs-0.11.4/src/cpp-utils/process/subprocess.cpp.omv~ cryfs-0.11.4/src/cpp-utils/process/subprocess.cpp
+--- cryfs-0.11.4/src/cpp-utils/process/subprocess.cpp.omv~	2025-04-12 03:36:37.211035401 +0200
++++ cryfs-0.11.4/src/cpp-utils/process/subprocess.cpp	2025-04-12 03:41:02.823219852 +0200
+@@ -5,6 +5,12 @@
+ #include <array>
+ #include <boost/process.hpp>
+ #include <boost/asio.hpp>
++#include <boost/process/v1/args.hpp>
++#include <boost/process/v1/async.hpp>
++#include <boost/process/v1/child.hpp>
++#include <boost/process/v1/exe.hpp>
++#include <boost/process/v1/search_path.hpp>
++#include <boost/process/v1/io.hpp>
+ 
+ using std::string;
+ using std::vector;
+@@ -26,7 +32,7 @@ namespace cpputils
+ 	{
+ 		bf::path _find_executable(const char *command)
+ 		{
+-			bf::path executable = bp::search_path(command);
++			bf::path executable = bp::v1::search_path(command);
+ 			if (executable == "")
+ 			{
+ 				throw std::runtime_error("Tried to run command " + std::string(command) + " but didn't find it in the PATH");
+@@ -62,7 +68,7 @@ namespace cpputils
+ 				ba::async_read(pipe_, buffer_, onOutput);
+ 			}
+ 
+-			bp::async_pipe& pipe()
++			bp::v1::async_pipe& pipe()
+ 			{
+ 				return pipe_;
+ 			}
+@@ -76,7 +82,7 @@ namespace cpputils
+ 		private:
+ 			std::vector<char> vOut_;
+ 			ba::mutable_buffer buffer_;
+-			bp::async_pipe pipe_;
++			bp::v1::async_pipe pipe_;
+ 			std::string output_;
+ 		};
+ 
+@@ -90,7 +96,7 @@ namespace cpputils
+ 
+ 			}
+ 
+-			bp::async_pipe& pipe()
++			bp::v1::async_pipe& pipe()
+ 			{
+ 				return pipe_;
+ 			}
+@@ -110,7 +116,7 @@ namespace cpputils
+ 		private:
+ 			const std::string& input_;
+ 			ba::const_buffer buffer_;
+-			bp::async_pipe pipe_;
++			bp::v1::async_pipe pipe_;
+ 		};
+ 	}
+ 
+@@ -141,12 +147,12 @@ namespace cpputils
+ 		OutputPipeHandler stderr_handler(&ctx);
+ 		InputPipeHandler stdin_handler(&ctx, input);
+ 
+-		bp::child child(
+-			bp::exe = executable.string(),
+-			bp::args(args),
+-			bp::std_out > stdout_handler.pipe(),
+-			bp::std_err > stderr_handler.pipe(),
+-			bp::std_in < stdin_handler.pipe()
++		bp::v1::child child(
++			bp::v1::exe = executable.string(),
++			bp::v1::args(args),
++			bp::v1::std_out > stdout_handler.pipe(),
++			bp::v1::std_err > stderr_handler.pipe(),
++			bp::v1::std_in < stdin_handler.pipe()
+ 		);
+ 
+ 		stdin_handler.async_write();
+diff -up cryfs-0.11.4/src/cryfs-unmount/CMakeLists.txt.omv~ cryfs-0.11.4/src/cryfs-unmount/CMakeLists.txt
