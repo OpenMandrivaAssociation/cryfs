@@ -16,6 +16,7 @@ BuildRequires:	pkgconfig(fuse)
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(cryptopp)
 BuildRequires:	pkgconfig(spdlog)
+BuildRequires:	pkgconfig(gtest)
 BuildRequires:	gomp-devel
 BuildRequires:	openmp-devel
 BuildRequires:	pkgconfig(libunwind)
