@@ -29,7 +29,6 @@ cryfs-0.10.1-static-cryfs-cli.patch
 cryfs-0.10.3-libstdc++-11.2.patch
 cryfs-0.11.4-boost-1.88.patch
 cryfs-1.0.1-system-cryptopp.patch
-https://patch-diff.githubusercontent.com/raw/cryfs/cryfs/pull/500.patch
 
 %description
 CryFS provides a FUSE-based mount that encrypts file contents, file
@@ -45,6 +44,9 @@ base directory, which can then be synchronized to remote storage
 rm -rf vendor/cryptopp
 find . -name "*.cpp" -o -name "*.h" |xargs sed -i -e 's,vendor_cryptopp,cryptopp,g'
 sed -i -e '/cryptopp/d' vendor/CMakeLists.txt
+
+# try fix build with boost 1.89, Patch fix is available but it not apply on current rel. So for now lets try use faster way.
+sed -i -e 's/\<system\>//' -e 's/  */ /g' cmake-utils/Dependencies.cmake
 
 %build
 export LDFLAGS="%{build_ldflags} -lboost_thread -lboost_program_options -lboost_filesystem -lcryptopp -lboost_chrono -lfuse -lcurl"
