@@ -3,7 +3,7 @@
 Summary:	Cryptographic filesystem for the cloud
 Name:		cryfs
 Version:	1.0.3
-Release:	2
+Release:	3
 License:	LGPLv3+
 Group:		File tools
 Url:		https://www.cryfs.org
@@ -24,11 +24,11 @@ BuildRequires:	range-v3-devel
 Requires:	fuse2
 
 %patchlist
-# dropped (no longer applies): cryfs-0.10.1-static-unmount-library.patch
-# dropped (no longer applies): cryfs-0.10.1-static-cryfs-cli.patch
+cryfs-0.10.1-static-unmount-library.patch
+cryfs-0.10.1-static-cryfs-cli.patch
+cryfs-1.0.1-system-cryptopp.patch
 # dropped (no longer applies): cryfs-0.10.3-libstdc++-11.2.patch
 # dropped (no longer applies): cryfs-0.11.4-boost-1.88.patch
-# dropped (no longer applies): cryfs-1.0.1-system-cryptopp.patch
 
 %description
 CryFS provides a FUSE-based mount that encrypts file contents, file
@@ -40,10 +40,9 @@ base directory, which can then be synchronized to remote storage
 
 %prep
 %autosetup -c -p1
-# Use system cryptopp
+# Use system cryptopp (link target switched by cryfs-1.0.1-system-cryptopp.patch)
 rm -rf vendor/cryptopp
 find . -name "*.cpp" -o -name "*.h" |xargs sed -i -e 's,vendor_cryptopp,cryptopp,g'
-sed -i -e 's/cryfs_vendor_cryptopp/cryptopp/' src/cpp-utils/CMakeLists.txt
 sed -i -e '/cryptopp/d' vendor/CMakeLists.txt
 
 # try fix build with boost 1.89, Patch fix is available but it not apply on current rel. So for now lets try use faster way.
